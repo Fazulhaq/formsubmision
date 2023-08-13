@@ -9,6 +9,7 @@ public class Grade {
     private String name;
     @NotBlank(message = "Subject must not be blank!")
     private String subject;
+    @Score(message = "Enter Grade letters!")
     private String score;
     private String id;
 
