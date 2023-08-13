@@ -1,6 +1,9 @@
-package com.mcit.gradesubmission;
+package com.mcit.gradesubmission.controller;
 
 
+import com.mcit.gradesubmission.Constant;
+import com.mcit.gradesubmission.Grade;
+import com.mcit.gradesubmission.repository.GradeRepository;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,16 +17,16 @@ import java.util.List;
 
 @Controller
 public class GradeController {
-    List<Grade> studentGrade = new ArrayList<>();
+    GradeRepository gradeRepository = new GradeRepository();
     @GetMapping("/grades")
     public String getGrades(Model model){
-        model.addAttribute("grades",studentGrade);
+        model.addAttribute("grades",gradeRepository.getAllGrade());
         return "grades";
     }
     @GetMapping("/")
     public String gradeForm(Model model,@RequestParam(required = false) String id){
         int index = getGradeIndex(id);
-        model.addAttribute("grade", index == Constant.NOT_FOUND ? new Grade() : studentGrade.get(index));
+        model.addAttribute("grade", index == Constant.NOT_FOUND ? new Grade() : gradeRepository.getGrade(index));
         return "form";
     }
     @PostMapping("/handleSubmit")
@@ -32,16 +35,16 @@ public class GradeController {
             return "form";
         int index = getGradeIndex(grade.getId());
         if (index == Constant.NOT_FOUND){
-            studentGrade.add(grade);
+            gradeRepository.addGrade(grade);
         }
         else {
-            studentGrade.set(index, grade);
+            gradeRepository.updateGrade(grade, index);
         }
         return "redirect:/grades";
     }
     public int getGradeIndex(String id){
-        for (int i =0; i < studentGrade.size(); i++){
-            if (studentGrade.get(i).getId().equals(id))
+        for (int i =0; i < gradeRepository.getAllGrade().size(); i++){
+            if (gradeRepository.getAllGrade().get(i).getId().equals(id))
                 return i;
         }
         return Constant.NOT_FOUND;
