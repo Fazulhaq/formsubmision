@@ -1,8 +1,10 @@
 package com.mcit.gradesubmission;
 
 
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -25,7 +27,9 @@ public class GradeController {
         return "form";
     }
     @PostMapping("/handleSubmit")
-    public String submitGrade(Grade grade){
+    public String submitGrade(@Valid Grade grade, BindingResult result){
+        if (result.hasErrors())
+            return "form";
         int index = getGradeIndex(grade.getId());
         if (index == Constant.NOT_FOUND){
             studentGrade.add(grade);
