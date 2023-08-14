@@ -1,10 +1,11 @@
 package com.mcit.gradesubmission.repository;
 
 import com.mcit.gradesubmission.Grade;
+import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
-
+@Repository
 public class GradeRepository {
     private List<Grade> studentGrade = new ArrayList<>();
     public Grade getGrade(int index){

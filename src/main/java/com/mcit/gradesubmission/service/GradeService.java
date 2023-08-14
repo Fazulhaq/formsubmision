@@ -3,11 +3,17 @@ package com.mcit.gradesubmission.service;
 import com.mcit.gradesubmission.Constant;
 import com.mcit.gradesubmission.Grade;
 import com.mcit.gradesubmission.repository.GradeRepository;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
-
+@Service
 public class GradeService {
-    GradeRepository gradeRepository = new GradeRepository();
+    GradeRepository gradeRepository;
+
+    public GradeService(GradeRepository gradeRepository) {
+        this.gradeRepository = gradeRepository;
+    }
+
     public Grade getGrade(int index){
         return gradeRepository.getGrade(index);
     }

@@ -18,7 +18,12 @@ import java.util.List;
 
 @Controller
 public class GradeController {
-    GradeService gradeService = new GradeService();
+    GradeService gradeService;
+
+    public GradeController(GradeService gradeService) {
+        this.gradeService = gradeService;
+    }
+
     @GetMapping("/grades")
     public String getGrades(Model model){
         model.addAttribute("grades",gradeService.getAllGrade());
