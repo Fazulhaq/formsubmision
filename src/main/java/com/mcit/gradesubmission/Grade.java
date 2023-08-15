@@ -2,8 +2,8 @@ package com.mcit.gradesubmission;
 
 import jakarta.validation.constraints.NotBlank;
 
-import java.util.UUID;
 
+import java.util.UUID;
 public class Grade {
     @NotBlank(message = "Name should not be blank!")
     private String name;
@@ -16,6 +16,14 @@ public class Grade {
     public Grade() {
         this.id = UUID.randomUUID().toString();
     }
+
+
+    public Grade(String name, String subject, String score) {
+        this.name = name;
+        this.subject = subject;
+        this.score = score;
+    }
+
 
     public String getName() {
         return name;
